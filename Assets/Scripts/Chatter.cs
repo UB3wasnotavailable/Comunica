@@ -13,25 +13,29 @@ public class Chatter : MonoBehaviour
     public ChatterType chatterType;
     public bool isDancing;
     public float dancingAngle = 180f;
+    public Transform hat;
 
-    private Renderer rend;
+    private Renderer hatRenderer;
     public Material defaultMaterial;
+    public Material hatMaterial;
     private Collider chatterCollider;
     
     public delegate void ChatterColorChangedHandler(Chatter chatter);
     public event ChatterColorChangedHandler OnChatterColorChanged;
 
-    
     private void Awake()
     {
-        rend = GetComponent<Renderer>();
-        rend.material = new Material(rend.sharedMaterial);
+        hat = transform.Find("Hat");
+        hatRenderer = hat.GetComponentInChildren<Renderer>();
+        hatRenderer.material = new Material(hatRenderer.sharedMaterial); // Create a unique material instance for the hat
+        hatMaterial = hatRenderer.material;
         chatterCollider = GetComponent<Collider>();
         initialPosition = transform.position;
         initialRotation = transform.rotation;
         initialType = chatterType;
     }
-    void Start()
+    
+    private void Start()
     {
         EnsureMaterialInstance();
         UpdateColor();
@@ -44,83 +48,87 @@ public class Chatter : MonoBehaviour
 
     void OnValidate()
     {
-        if (rend == null)
+        if (hatRenderer == null)
         {
-            rend = GetComponent<Renderer>();
+            hatRenderer = transform.Find("Hat").GetComponentInChildren<Renderer>();
         }
         
         if (chatterCollider == null)
         {
             chatterCollider = GetComponent<Collider>();
         }
+        
         EnsureMaterialInstance();
         UpdateColor();
     }
 
     void UpdateColor()
     {
-        switch (chatterType)
+        if (hatRenderer != null)
         {
-            case ChatterType.Red:
-                rend.sharedMaterial.color = Color.red;
-                gameObject.layer = LayerMask.NameToLayer("Default");
-                break;
-            case ChatterType.Black:
-                rend.sharedMaterial.color = Color.black;
-                gameObject.layer = LayerMask.NameToLayer("Default");
-                break;
-            case ChatterType.Blue:
-                rend.sharedMaterial.color = Color.blue;
-                gameObject.layer = LayerMask.NameToLayer("Default");
-                break;
-            case ChatterType.Yellow:
-                rend.sharedMaterial.color = Color.yellow;
-                gameObject.layer = LayerMask.NameToLayer("Default");
-                break;
-            case ChatterType.Gray:
-                rend.sharedMaterial.color = Color.magenta;
-                gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-                break;
+            switch (chatterType)
+            {
+                case ChatterType.Red:
+                    hatRenderer.sharedMaterial.color = Color.red;
+                    gameObject.layer = LayerMask.NameToLayer("Default");
+                    break;
+                case ChatterType.Black:
+                    hatRenderer.sharedMaterial.color = Color.black;
+                    gameObject.layer = LayerMask.NameToLayer("Default");
+                    break;
+                case ChatterType.Blue:
+                    hatRenderer.sharedMaterial.color = Color.blue;
+                    gameObject.layer = LayerMask.NameToLayer("Default");
+                    break;
+                case ChatterType.Yellow:
+                    hatRenderer.sharedMaterial.color = Color.yellow;
+                    gameObject.layer = LayerMask.NameToLayer("Default");
+                    break;
+                case ChatterType.Gray:
+                    hatRenderer.sharedMaterial.color = Color.gray;
+                    gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                    break;
+            }
         }
     }
-    
+
     public void ChangeChatterType(ChatterType newType)
     {
         chatterType = newType;
         UpdateColor();
         OnChatterColorChanged?.Invoke(this);
     }
-    
+
     void EnsureMaterialInstance()
     {
-        if (rend != null)
+        if (hatRenderer != null)
         {
             // If sharedMaterial is null, assign the default material
-            if (rend.sharedMaterial == null)
+            if (hatRenderer.sharedMaterial == null)
             {
                 if (defaultMaterial != null)
                 {
-                    rend.sharedMaterial = defaultMaterial;
+                    hatRenderer.sharedMaterial = defaultMaterial;
                 }
                 else
                 {
                     // Create a new default material if none is assigned
-                    rend.sharedMaterial = new Material(Shader.Find("Standard"));
+                    hatRenderer.sharedMaterial = new Material(Shader.Find("Standard"));
                 }
             }
 
-            if (rend.sharedMaterial != null)
+            if (hatRenderer.sharedMaterial != null)
             {
                 // Check if the material instance is already unique
-                if (!rend.sharedMaterial.name.EndsWith("(Instance)"))
+                if (!hatRenderer.sharedMaterial.name.EndsWith("(Instance)"))
                 {
-                    rend.sharedMaterial = new Material(rend.sharedMaterial);
-                    rend.sharedMaterial.name += " (Instance)"; // Rename to identify unique instances
+                    hatRenderer.sharedMaterial = new Material(hatRenderer.sharedMaterial);
+                    hatRenderer.sharedMaterial.name += " (Instance)"; // Rename to identify unique instances
                 }
             }
         }
     }
-    
+
     public void ResetChatter()
     {
         transform.position = initialPosition;

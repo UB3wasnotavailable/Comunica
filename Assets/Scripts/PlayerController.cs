@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public GameManager GM;
+    public Animator anim;
     
     public float speed;
     private Vector3 moveDirection;
@@ -23,7 +24,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        GM = GameObject.FindWithTag("GameController").GetComponent<GameManager>();;
+        GM = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -61,6 +63,15 @@ public class PlayerController : MonoBehaviour
             }
             
             CheckInteractedGrayChatters();
+
+            if (isChatting)
+            {
+                anim.SetTrigger("StopWalking");
+            }
+            else
+            {
+                anim.SetTrigger("StartWalking");
+            }
         }
     }
 
@@ -78,7 +89,7 @@ public class PlayerController : MonoBehaviour
             Chatter chatter = other.GetComponent<Chatter>();
             if (chatter != null)
             {
-                chatter.OnChatterColorChanged += HandleChatterColorChanged;
+                // chatter.OnChatterColorChanged += HandleChatterColorChanged;
                 HandleChatterInteraction(chatter);
                 
                 if (currentChatter.isDancing)
@@ -101,7 +112,7 @@ public class PlayerController : MonoBehaviour
         {
             if (currentChatter != null)
             {
-                currentChatter.OnChatterColorChanged -= HandleChatterColorChanged;
+                // currentChatter.OnChatterColorChanged -= HandleChatterColorChanged;
 
                 if (currentChatter.chatterType == Chatter.ChatterType.Gray)
                 {
