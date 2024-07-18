@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public bool isChatting = false;
     private Chatter currentChatter = null;
 
-    private bool isRotating = false;
+    public bool isRotating = false;
     private Quaternion initialRotation;
     private Quaternion targetRotation;
     private Vector3 rotationPoint;
@@ -78,7 +78,26 @@ public class PlayerController : MonoBehaviour
     void Move()
     {
         transform.position += moveDirection * speed * Time.deltaTime;
+        
+        Quaternion targetRotation = Quaternion.identity;
+        switch (moveDirection)
+        {
+            case Vector3 forward when moveDirection == Vector3.forward:
+                targetRotation = Quaternion.Euler(0, 0, 0);
+                break;
+            case Vector3 back when moveDirection == Vector3.back:
+                targetRotation = Quaternion.Euler(0, 180, 0);
+                break;
+            case Vector3 left when moveDirection == Vector3.left:
+                targetRotation = Quaternion.Euler(0, 270, 0);
+                break;
+            case Vector3 right when moveDirection == Vector3.right:
+                targetRotation = Quaternion.Euler(0, 90, 0); 
+                break;
+        }
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
+    
 
     void OnTriggerEnter(Collider other)
     {
@@ -195,6 +214,13 @@ public class PlayerController : MonoBehaviour
         Vector3 directionToChatter = chatterTransform.position - transform.position;
         Vector3 cardinalDirection = GetCardinalDirection(-directionToChatter);
         moveDirection = cardinalDirection; 
+        if (currentChatter.isDisappearing)
+        {
+            // per ora sale 5 sec ma poi torna giù. Da rivedere (spegnere il rigidbody o farlo salire per più tempo)
+            var currentChatterScript = currentChatter.GetComponent<Chatter>();
+            currentChatterScript.StartMoving(Vector3.up, 5);
+            // currentChatter.gameObject.SetActive(false);
+        }
         isChatting = false;
     }
 
@@ -215,6 +241,13 @@ public class PlayerController : MonoBehaviour
         Vector3 directionToChatter = chatterTransform.position - transform.position;
         moveDirection = GetCardinalDirection(directionToChatter);
         speed = 5;
+        if (currentChatter.isDisappearing)
+        {
+            // per ora sale 5 sec ma poi torna giù. Da rivedere (spegnere il rigidbody o farlo salire per più tempo)
+            var currentChatterScript = currentChatter.GetComponent<Chatter>();
+            currentChatterScript.StartMoving(Vector3.up, 5);
+            // currentChatter.gameObject.SetActive(false);
+        }
         isChatting = false;
     }
     
@@ -339,6 +372,10 @@ public class PlayerController : MonoBehaviour
             currentChatter.transform.rotation = targetRotation; // Ensure the final rotation is exact
             isRotating = false;
             Debug.Log("Rotation complete.");
+        }
+        else
+        {
+            RotatePlayer();
         }
     }
     

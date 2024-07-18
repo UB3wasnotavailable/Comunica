@@ -12,12 +12,14 @@ public class Chatter : MonoBehaviour
     public enum ChatterType { Red, Black, Blue, Yellow, Gray }
     public ChatterType chatterType;
     public bool isDancing;
+    public bool isDisappearing;
     public float dancingAngle = 180f;
     public Transform hat;
+    public Transform balloon;
 
     private Renderer hatRenderer;
+    private Renderer balloonRenderer;
     public Material defaultMaterial;
-    public Material hatMaterial;
     private Collider chatterCollider;
     
     public delegate void ChatterColorChangedHandler(Chatter chatter);
@@ -27,8 +29,10 @@ public class Chatter : MonoBehaviour
     {
         hat = transform.Find("Hat");
         hatRenderer = hat.GetComponentInChildren<Renderer>();
-        hatRenderer.material = new Material(hatRenderer.sharedMaterial); // Create a unique material instance for the hat
-        hatMaterial = hatRenderer.material;
+        hatRenderer.material = new Material(hatRenderer.sharedMaterial); 
+        balloon = transform.Find("Balloon");
+        balloonRenderer = balloon.GetComponent<Renderer>();
+        balloonRenderer.material = new Material(balloonRenderer.sharedMaterial);
         chatterCollider = GetComponent<Collider>();
         initialPosition = transform.position;
         initialRotation = transform.rotation;
@@ -39,6 +43,7 @@ public class Chatter : MonoBehaviour
     {
         EnsureMaterialInstance();
         UpdateColor();
+        UpdateBalloonColor();
     }
 
     private void Update()
@@ -53,6 +58,11 @@ public class Chatter : MonoBehaviour
             hatRenderer = transform.Find("Hat").GetComponentInChildren<Renderer>();
         }
         
+        if (balloonRenderer == null)
+        {
+            balloonRenderer = transform.Find("Balloon").GetComponent<Renderer>();
+        }
+        
         if (chatterCollider == null)
         {
             chatterCollider = GetComponent<Collider>();
@@ -60,6 +70,7 @@ public class Chatter : MonoBehaviour
         
         EnsureMaterialInstance();
         UpdateColor();
+        UpdateBalloonColor();
     }
 
     void UpdateColor()
@@ -89,6 +100,24 @@ public class Chatter : MonoBehaviour
                     gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     break;
             }
+        }
+    }
+
+     void UpdateBalloonColor()
+    {
+        if (!isDancing && !isDisappearing)
+        {
+            balloonRenderer.enabled = false;
+        }
+        else if (isDancing)
+        {
+            balloonRenderer.enabled = true;
+            balloonRenderer.sharedMaterial.color = Color.green;
+        }
+        else if (isDisappearing)
+        {
+            balloonRenderer.enabled = true;
+            balloonRenderer.sharedMaterial.color = Color.red;
         }
     }
 
@@ -127,6 +156,33 @@ public class Chatter : MonoBehaviour
                 }
             }
         }
+        
+        if (balloonRenderer != null)
+        {
+            // If sharedMaterial is null, assign the default material
+            if (balloonRenderer.sharedMaterial == null)
+            {
+                if (defaultMaterial != null)
+                {
+                    balloonRenderer.sharedMaterial = defaultMaterial;
+                }
+                else
+                {
+                    // Create a new default material if none is assigned
+                    balloonRenderer.sharedMaterial = new Material(Shader.Find("Standard"));
+                }
+            }
+
+            if (balloonRenderer.sharedMaterial != null)
+            {
+                // Check if the material instance is already unique
+                if (!balloonRenderer.sharedMaterial.name.EndsWith("(Instance)"))
+                {
+                    balloonRenderer.sharedMaterial = new Material(hatRenderer.sharedMaterial);
+                    balloonRenderer.sharedMaterial.name += " (Instance)"; // Rename to identify unique instances
+                }
+            }
+        }
     }
 
     public void ResetChatter()
@@ -134,5 +190,26 @@ public class Chatter : MonoBehaviour
         transform.position = initialPosition;
         transform.rotation = initialRotation;
         ChangeChatterType(initialType);
+    }
+    
+    public void StartMoving(Vector3 direction, float duration)
+    {
+        StartCoroutine(MoveForDuration(direction, duration));
+    }
+    
+    public IEnumerator MoveForDuration(Vector3 direction, float duration)
+    {
+        float elapsedTime = 0f;
+        Vector3 startPosition = transform.position;
+
+        while (elapsedTime < duration)
+        {
+            transform.position = startPosition + direction * (10 * elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure the chatter ends exactly at the final position
+        transform.position = startPosition + direction;
     }
 }
