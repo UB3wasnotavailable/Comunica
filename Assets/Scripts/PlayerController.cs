@@ -192,6 +192,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case Chatter.ChatterType.Yellow:
                 Stop();
+                isChatting = false;
                 GM.ui.ShowWinMenu();
                 break;
             case Chatter.ChatterType.Gray:

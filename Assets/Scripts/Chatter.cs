@@ -50,17 +50,19 @@ public class Chatter : MonoBehaviour
     {
         
     }
-
+    
     void OnValidate()
     {
-        if (hatRenderer == null)
+        Transform hatTransform = transform.Find("Hat");
+        if (hatTransform != null && hatRenderer == null)
         {
-            hatRenderer = transform.Find("Hat").GetComponentInChildren<Renderer>();
+            hatRenderer = hatTransform.GetComponentInChildren<SkinnedMeshRenderer>();
         }
         
-        if (balloonRenderer == null)
+        Transform balloonTransform = transform.Find("Balloon");
+        if (balloonTransform != null && balloonRenderer == null)
         {
-            balloonRenderer = transform.Find("Balloon").GetComponent<Renderer>();
+            balloonRenderer = balloonTransform.GetComponent<MeshRenderer>();
         }
         
         if (chatterCollider == null)
@@ -130,11 +132,13 @@ public class Chatter : MonoBehaviour
 
     void EnsureMaterialInstance()
     {
+        Debug.Log("sono in ensurematerialinstance");
         if (hatRenderer != null)
         {
             // If sharedMaterial is null, assign the default material
             if (hatRenderer.sharedMaterial == null)
             {
+                Debug.Log("shared Material è nullo");
                 if (defaultMaterial != null)
                 {
                     hatRenderer.sharedMaterial = defaultMaterial;
@@ -155,6 +159,10 @@ public class Chatter : MonoBehaviour
                     hatRenderer.sharedMaterial.name += " (Instance)"; // Rename to identify unique instances
                 }
             }
+        }
+        else
+        {
+            Debug.Log("hat renderer è nullo");
         }
         
         if (balloonRenderer != null)
