@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public GameObject winMenuPanel;
     public GameObject loseMenuPanel;
     public GameObject GameOverPanel;
+    public GameObject ChatPanel;
     public GameObject grayChatterMenuPanel;
 
     public GameObject player;
@@ -39,7 +40,8 @@ public class UIManager : MonoBehaviour
     public void ShowMainMenu()
     {
         menuHistory.Clear();
-        
+
+        ChatPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
         controlsPanel.SetActive(false);
         contactsPanel.SetActive(false);
@@ -53,6 +55,7 @@ public class UIManager : MonoBehaviour
     public void StartGame()
     {
         mainMenuPanel.SetActive(false);
+        ChatPanel.SetActive(true);
         Time.timeScale = 1;
         GM.StartLevel(GM.currentLevelIndex);
     }

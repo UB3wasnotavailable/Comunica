@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection;
     public bool isChatting = false;
     private Chatter currentChatter = null;
+    public AutoScrollingText autoScrollingText;
 
     private bool isRotating = false;
     private Quaternion initialRotation;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         GM = GameObject.FindWithTag("GameController").GetComponent<GameManager>();;
+        autoScrollingText = GameObject.FindObjectOfType<AutoScrollingText>();
     }
 
     void Update()
@@ -80,7 +82,10 @@ public class PlayerController : MonoBehaviour
             {
                 chatter.OnChatterColorChanged += HandleChatterColorChanged;
                 HandleChatterInteraction(chatter);
-                
+
+                // Gestisci l'interazione con il chatter
+                HandleChatterInteraction(chatter);
+
                 if (currentChatter.isDancing)
                 {
                     StartRotationWithChatter(currentChatter);
@@ -91,6 +96,7 @@ public class PlayerController : MonoBehaviour
                     GM.ui.ShowGrayChatterMenu();
                     isIgnoring = true;
                 }
+               
             }
         }
     }
@@ -147,7 +153,12 @@ public class PlayerController : MonoBehaviour
     void HandleChatterInteraction(Chatter chatter)
     {
         currentChatter = chatter;
-        
+
+        if (autoScrollingText != null)
+        {
+            autoScrollingText.DisplayNextMessage();
+        }
+
         switch (chatter.chatterType)
         {
             case Chatter.ChatterType.Red:

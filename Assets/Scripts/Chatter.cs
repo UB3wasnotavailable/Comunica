@@ -8,7 +8,10 @@ public class Chatter : MonoBehaviour
     private Vector3 initialPosition;
     private ChatterType initialType;
     private Quaternion initialRotation;
-    
+
+    public int dialogueIndex;
+    private InteractionManager interactionManager;
+
     public enum ChatterType { Red, Black, Blue, Yellow, Gray }
     public ChatterType chatterType;
     public bool isDancing;
@@ -35,6 +38,7 @@ public class Chatter : MonoBehaviour
     {
         EnsureMaterialInstance();
         UpdateColor();
+        interactionManager = FindObjectOfType<InteractionManager>();
     }
 
     private void Update()
@@ -120,7 +124,16 @@ public class Chatter : MonoBehaviour
             }
         }
     }
-    
+
+    void OnTriggerEnter(Collider other)
+    {
+        // Verifica se l'oggetto che interagisce è il player
+        if (other.CompareTag("Player"))
+        {
+            // Attiva il dialogo corretto nel manager
+            interactionManager.ActivateDialogueBox(dialogueIndex);
+        }
+    }
     public void ResetChatter()
     {
         transform.position = initialPosition;
