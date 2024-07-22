@@ -55,6 +55,7 @@ public class UIManager : MonoBehaviour
         mainMenuPanel.SetActive(false);
         Time.timeScale = 1;
         GM.StartLevel(GM.currentLevelIndex);
+        playerController.isSpeedAdjusted = false;
     }
 
     public void ShowControls()
@@ -89,6 +90,7 @@ public class UIManager : MonoBehaviour
     public void HideInGameMenu()
     {
         inGameMenuPanel.SetActive(false);
+        loseMenuPanel.SetActive(false);
         Time.timeScale = 1; // Resume the game
     }
 
@@ -98,12 +100,14 @@ public class UIManager : MonoBehaviour
         //TeleportPlayerToLevel(currentLevel);
         GM.ResetLevel();
         HideInGameMenu();
+        playerController.isSpeedAdjusted = false;
     }
 
     public void NextLevelButton()
     {
         winMenuPanel.SetActive(false);
         GM.NextLevel();
+        playerController.isSpeedAdjusted = false;
     }
 
     public void ShowWinMenu()

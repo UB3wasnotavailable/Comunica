@@ -9,6 +9,10 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
     
     public float speed;
+    public float augmentedSpeed;
+    public float distanceThreshold = 10f;
+    public float currentSpeed;
+    public bool isSpeedAdjusted = false;
     private Vector3 moveDirection;
     public bool isChatting = false;
     private Chatter currentChatter = null;
@@ -18,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private Quaternion targetRotation;
     private Vector3 rotationPoint;
     private float rotationSpeed = 180f;
-
+    private Queue<Chatter.ChatterType> lastThreeChatters = new Queue<Chatter.ChatterType>(3);
     private List<Chatter> interactedGrayChatters = new List<Chatter>();
     private bool isIgnoring = false;
 
@@ -36,7 +40,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (speed == 0)
+            if (currentSpeed == 0)
             {
                 CheckForBlueChatters();
             }
@@ -59,6 +63,11 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                if (!isSpeedAdjusted)
+                {
+                    AdjustSpeedBasedOnDistance();
+                    isSpeedAdjusted = true;
+                }
                 Move();
             }
             
@@ -77,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        transform.position += moveDirection * speed * Time.deltaTime;
+        transform.position += moveDirection * currentSpeed * Time.deltaTime;
         
         Quaternion targetRotation = Quaternion.identity;
         switch (moveDirection)
@@ -98,13 +107,38 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
     
+    void AdjustSpeedBasedOnDistance()
+    {
+        Ray ray = new Ray(transform.position, moveDirection);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            float distance = hit.distance;
+            if (distance > distanceThreshold)
+            {
+                currentSpeed = augmentedSpeed;
+            }
+            else
+            {
+                currentSpeed = speed;
+            }
+        }
+        else
+        {
+            currentSpeed = speed;
+        }
+    }
+    
 
     void OnTriggerEnter(Collider other)
     {
-        isChatting = true;
+        if (other.CompareTag("Wall"))
+        {
+            GM.ui.ShowLoseMenu();
+        }
         
         if (other.CompareTag("Chatter"))
         {
+            isChatting = true;
             Chatter chatter = other.GetComponent<Chatter>();
             if (chatter != null)
             {
@@ -177,10 +211,13 @@ public class PlayerController : MonoBehaviour
     void HandleChatterInteraction(Chatter chatter)
     {
         currentChatter = chatter;
+        isSpeedAdjusted = false;
+        TrackChatterInteraction(chatter.chatterType);
         
         switch (chatter.chatterType)
         {
             case Chatter.ChatterType.Red:
+                currentChatter.isDancing = false;
                 PushAwayFromChatter(chatter.transform);
                 break;
             case Chatter.ChatterType.Black:
@@ -205,7 +242,7 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = position;
         transform.rotation = rotation;
-        speed = 0;
+        currentSpeed = 0;
         isChatting = false;
         currentChatter = null;
     }
@@ -241,7 +278,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 directionToChatter = chatterTransform.position - transform.position;
         moveDirection = GetCardinalDirection(directionToChatter);
-        speed = 5;
+        currentSpeed = speed;
         if (currentChatter.isDisappearing)
         {
             // per ora sale 5 sec ma poi torna giù. Da rivedere (spegnere il rigidbody o farlo salire per più tempo)
@@ -385,7 +422,7 @@ public class PlayerController : MonoBehaviour
         currentChatter.GetComponent<Collider>().isTrigger = false;
         GM.ui.HideGrayChatterMenu();
         isChatting = false;
-        speed = 5;
+        currentSpeed = speed;
     }
     
     public void GrayChatterOptionInteract()
@@ -404,6 +441,36 @@ public class PlayerController : MonoBehaviour
             {
                 chatter.ChangeChatterType(Chatter.ChatterType.Gray);
                 interactedGrayChatters.RemoveAt(i);
+            }
+        }
+    }
+    
+    void TrackChatterInteraction(Chatter.ChatterType chatterType)
+    {
+        if (lastThreeChatters.Count >= 3)
+        {
+            lastThreeChatters.Dequeue();
+        }
+        lastThreeChatters.Enqueue(chatterType);
+        CheckForRedChatterLoop();
+    }
+    
+    void CheckForRedChatterLoop()
+    {
+        if (lastThreeChatters.Count == 3)
+        {
+            bool allRed = true;
+            foreach (Chatter.ChatterType chatterType in lastThreeChatters)
+            {
+                if (chatterType != Chatter.ChatterType.Red)
+                {
+                    allRed = false;
+                    break;
+                }
+            }
+            if (allRed)
+            {
+                GM.ui.ShowLoseMenu(); 
             }
         }
     }

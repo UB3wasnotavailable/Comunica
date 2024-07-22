@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         // Move player to spawn position
         player.transform.position = level.spawnPoint.position;
         player.TeleportTo(level.spawnPoint.position, level.spawnPoint.rotation);
-        player.speed = 0;
+        player.currentSpeed = 0;
         player.isChatting = false;
 
         foreach (Level lvl in levels)
