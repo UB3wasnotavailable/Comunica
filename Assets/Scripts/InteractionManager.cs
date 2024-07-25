@@ -4,6 +4,7 @@ public class InteractionManager : MonoBehaviour
 {
     // Array dei GameObject che devono apparire
     public GameObject[] dialogueBoxes;
+    public int dialogueIndex;
 
     // Metodo per abilitare il GameObject corretto
     public void ActivateDialogueBox(int index)

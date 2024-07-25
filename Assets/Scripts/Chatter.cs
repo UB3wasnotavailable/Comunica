@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Chatter : MonoBehaviour
@@ -9,8 +10,8 @@ public class Chatter : MonoBehaviour
     private ChatterType initialType;
     private Quaternion initialRotation;
 
-    public int dialogueIndex;
-    private InteractionManager interactionManager;
+    // public int dialogueIndex;
+    public InteractionManager interactionManager;
 
     public enum ChatterType { Red, Black, Blue, Yellow, Gray }
     public ChatterType chatterType;
@@ -30,6 +31,7 @@ public class Chatter : MonoBehaviour
         rend = GetComponent<Renderer>();
         rend.material = new Material(rend.sharedMaterial);
         chatterCollider = GetComponent<Collider>();
+        interactionManager = GameObject.Find("Canvas").GetComponentInChildren<InteractionManager>();
         initialPosition = transform.position;
         initialRotation = transform.rotation;
         initialType = chatterType;
@@ -38,7 +40,6 @@ public class Chatter : MonoBehaviour
     {
         EnsureMaterialInstance();
         UpdateColor();
-        interactionManager = FindObjectOfType<InteractionManager>();
     }
 
     private void Update()
@@ -131,7 +132,15 @@ public class Chatter : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Attiva il dialogo corretto nel manager
-            interactionManager.ActivateDialogueBox(dialogueIndex);
+            interactionManager.ActivateDialogueBox(interactionManager.dialogueIndex);
+            if (interactionManager.dialogueIndex < interactionManager.dialogueBoxes.Length)
+            {
+                interactionManager.dialogueIndex += 1;
+            }
+            else
+            {
+                interactionManager.dialogueIndex = 0;
+            }
         }
     }
     public void ResetChatter()
