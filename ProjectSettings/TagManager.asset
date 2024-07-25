@@ -8,6 +8,7 @@ TagManager:
   - Spawnpoint
   - UI
   - Hat
+  - Wall
   layers:
   - Default
   - TransparentFX
