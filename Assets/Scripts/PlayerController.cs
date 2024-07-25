@@ -10,12 +10,12 @@ public class PlayerController : MonoBehaviour
     
     public float speed;
     public float augmentedSpeed;
-    public float distanceThreshold = 10f;
+    public float distanceThreshold = 7f;
     public float currentSpeed;
     public bool isSpeedAdjusted = false;
     private Vector3 moveDirection;
     public bool isChatting = false;
-    private Chatter currentChatter = null;
+    private Chatter currentChatter = null; 
 
     public bool isRotating = false;
     private Quaternion initialRotation;
