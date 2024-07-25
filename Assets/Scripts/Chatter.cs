@@ -16,6 +16,7 @@ public class Chatter : MonoBehaviour
     public float dancingAngle = 180f;
     public Transform hat;
     public Transform balloon;
+    public InteractionManager interactionManager;
 
     private Renderer hatRenderer;
     private Renderer balloonRenderer;
@@ -37,6 +38,7 @@ public class Chatter : MonoBehaviour
         initialPosition = transform.position;
         initialRotation = transform.rotation;
         initialType = chatterType;
+        interactionManager = GameObject.Find("Canvas").GetComponentInChildren<InteractionManager>();
     }
     
     private void Start()
@@ -73,6 +75,22 @@ public class Chatter : MonoBehaviour
         EnsureMaterialInstance();
         UpdateColor();
         UpdateBalloonColor();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            interactionManager.ActivateDialogueBox(interactionManager.dialogueIndex);
+            if (interactionManager.dialogueIndex < interactionManager.dialogueBoxes.Length)
+            {
+                interactionManager.dialogueIndex += 1;
+            }
+            else
+            {
+                interactionManager.dialogueIndex = 0;
+            }
+        }
     }
 
     void UpdateColor()

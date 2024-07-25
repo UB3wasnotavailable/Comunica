@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection;
     public bool isChatting = false;
     private Chatter currentChatter = null; 
+    public InteractionManager interactionManager;
 
     public bool isRotating = false;
     private Quaternion initialRotation;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
     {
         GM = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
         anim = GetComponent<Animator>();
+        interactionManager = GameObject.Find("Canvas").GetComponentInChildren<InteractionManager>();
     }
 
     void Update()
@@ -231,6 +233,7 @@ public class PlayerController : MonoBehaviour
                 Stop();
                 isChatting = false;
                 GM.ui.ShowWinMenu();
+                interactionManager.ResetBoxes();
                 break;
             case Chatter.ChatterType.Gray:
                 GM.ui.ShowGrayChatterMenu();

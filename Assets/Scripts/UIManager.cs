@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject loseMenuPanel;
     public GameObject GameOverPanel;
     public GameObject grayChatterMenuPanel;
+    public GameObject chatPanel;
 
     public GameObject player;
     private PlayerController playerController;
@@ -48,6 +49,7 @@ public class UIManager : MonoBehaviour
         loseMenuPanel.SetActive(false);
         GameOverPanel.SetActive(false);
         grayChatterMenuPanel.SetActive(false);
+        chatPanel.SetActive(false);
     }
 
     public void StartGame()
@@ -56,6 +58,7 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1;
         GM.StartLevel(GM.currentLevelIndex);
         playerController.isSpeedAdjusted = false;
+        chatPanel.SetActive(true);
     }
 
     public void ShowControls()
@@ -64,6 +67,7 @@ public class UIManager : MonoBehaviour
         mainMenuPanel.SetActive(false);
         inGameMenuPanel.SetActive(false);
         controlsPanel.SetActive(true);
+        chatPanel.SetActive(false);
     }
 
     public void ShowContacts()
