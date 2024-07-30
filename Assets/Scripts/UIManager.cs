@@ -27,15 +27,15 @@ public class UIManager : MonoBehaviour
     private EventSystem eventSystem;
    
     public int currentButtonIndex = 0;
-    public Button[] mainMenuButtons;
-    public Button[] controlsMenuButtons;
-    public Button[] contactsMenuButtons;
-    public Button[] inGameMenuButtons;
-    public Button[] winMenuButtons;
-    public Button[] loseMenuButtons;
-    public Button[] gameOverMenuButtons;
-    public Button[] feedbackMenuButtons;
-    public Button[] grayChatterMenuButtons;
+    public Button mainMenuButton;
+    public Button controlsMenuButton;
+    public Button contactsMenuButton;
+    public Button inGameMenuButton;
+    public Button winMenuButton;
+    public Button loseMenuButton;
+    public Button gameOverMenuButton;
+    public Button feedbackMenuButton;
+    public Button grayChatterMenuButton;
 
     private Vector3[] levelPositions = new Vector3[] {
         new Vector3(0, 0, 0),
@@ -55,67 +55,72 @@ public class UIManager : MonoBehaviour
         ShowMainMenu();
     }
     
-    void Update()
-    {
-        HandleMenuNavigation();
-    }
+    // void Update()
+    // {
+    //     HandleMenuNavigation();
+    // }
+    //
+    // void HandleMenuNavigation()
+    // {
+    //     Button[] buttons = GetCurrentMenuButtons();
+    //     if (buttons.Length == 0) return;
+    //     
+    //     if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+    //     {
+    //         currentButtonIndex--;
+    //         if (currentButtonIndex < 0) currentButtonIndex = buttons.Length - 1;
+    //         HighlightButton(buttons[currentButtonIndex]);
+    //     }
+    //     else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+    //     {
+    //         currentButtonIndex++;
+    //         if (currentButtonIndex >= buttons.Length) currentButtonIndex = 0;
+    //         HighlightButton(buttons[currentButtonIndex]);
+    //     }
+    //     else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+    //     {
+    //         Button selectedButton = buttons[currentButtonIndex];
+    //         selectedButton.onClick.Invoke();
+    //         EventSystem.current.SetSelectedGameObject(null);
+    //         Debug.Log("sto cliccando spazio");
+    //     }
+    // }
+    //
+    // void HighlightButton(Button button)
+    // {
+    //     EventSystem.current.SetSelectedGameObject(null);
+    //     EventSystem.current.SetSelectedGameObject(button.gameObject);
+    //     
+    //     RectTransform arrowTransform = selectionPointer.GetComponent<RectTransform>();
+    //     RectTransform buttonTransform = button.GetComponent<RectTransform>();
+    //     arrowTransform.position = new Vector3(buttonTransform.position.x + buttonTransform.sizeDelta.x / 2 + 10, buttonTransform.position.y, buttonTransform.position.z);
+    // }
+    //
+    // void HighlightFirstButton(Button[] buttons)
+    // {
+    //     if (buttons.Length > 0)
+    //     {
+    //         currentButtonIndex = 0;
+    //         HighlightButton(buttons[currentButtonIndex]);
+    //     }
+    // }
     
-    void HandleMenuNavigation()
+    private void SetSelectedButton(Button button)
     {
-        Button[] buttons = GetCurrentMenuButtons();
-        if (buttons.Length == 0) return;
-        
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            currentButtonIndex--;
-            if (currentButtonIndex < 0) currentButtonIndex = buttons.Length - 1;
-            HighlightButton(buttons[currentButtonIndex]);
-        }
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            currentButtonIndex++;
-            if (currentButtonIndex >= buttons.Length) currentButtonIndex = 0;
-            HighlightButton(buttons[currentButtonIndex]);
-        }
-        else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
-        {
-            Button selectedButton = buttons[currentButtonIndex];
-            selectedButton.onClick.Invoke();
-            EventSystem.current.SetSelectedGameObject(null);
-            Debug.Log("sto cliccando spazio");
-        }
+        eventSystem.SetSelectedGameObject(null); // Deselect any currently selected object
+        eventSystem.SetSelectedGameObject(button.gameObject); // Select the new button
     }
-    
-    void HighlightButton(Button button)
-    {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(button.gameObject);
-        
-        RectTransform arrowTransform = selectionPointer.GetComponent<RectTransform>();
-        RectTransform buttonTransform = button.GetComponent<RectTransform>();
-        arrowTransform.position = new Vector3(buttonTransform.position.x + buttonTransform.sizeDelta.x / 2 + 10, buttonTransform.position.y, buttonTransform.position.z);
-    }
-    
-    void HighlightFirstButton(Button[] buttons)
-    {
-        if (buttons.Length > 0)
-        {
-            currentButtonIndex = 0;
-            HighlightButton(buttons[currentButtonIndex]);
-        }
-    }
-    
-    Button[] GetCurrentMenuButtons()
-    {
-        if (mainMenuPanel.activeSelf) return mainMenuButtons;
-        if (controlsPanel.activeSelf) return controlsMenuButtons;
-        if (contactsPanel.activeSelf) return contactsMenuButtons;
-        if (inGameMenuPanel.activeSelf) return inGameMenuButtons;
-        if (winMenuPanel.activeSelf) return winMenuButtons;
-        if (loseMenuPanel.activeSelf) return loseMenuButtons;
-        if (grayChatterMenuPanel.activeSelf) return grayChatterMenuButtons;
-        return new Button[0];
-    }
+    // Button[] GetCurrentMenuButtons()
+    // {
+    //     if (mainMenuPanel.activeSelf) return mainMenuButtons;
+    //     if (controlsPanel.activeSelf) return controlsMenuButtons;
+    //     if (contactsPanel.activeSelf) return contactsMenuButtons;
+    //     if (inGameMenuPanel.activeSelf) return inGameMenuButtons;
+    //     if (winMenuPanel.activeSelf) return winMenuButtons;
+    //     if (loseMenuPanel.activeSelf) return loseMenuButtons;
+    //     if (grayChatterMenuPanel.activeSelf) return grayChatterMenuButtons;
+    //     return new Button[0];
+    // }
 
 
     public void ShowMainMenu()
@@ -131,9 +136,11 @@ public class UIManager : MonoBehaviour
         GameOverPanel.SetActive(false);
         grayChatterMenuPanel.SetActive(false);
         chatPanel.SetActive(false);
+        SetSelectedButton(mainMenuButton);
+
         Debug.Log("entrato in main menu");
 
-        HighlightFirstButton(mainMenuButtons);
+        //HighlightFirstButton(mainMenuButtons);
     }
 
     public void StartGame()
@@ -153,9 +160,11 @@ public class UIManager : MonoBehaviour
         controlsPanel.SetActive(true);
         chatPanel.SetActive(false);
         mainMenuPanel.SetActive(false);
+        SetSelectedButton(controlsMenuButton);
+
         Debug.Log("entrato in controls");
         
-        HighlightFirstButton(controlsMenuButtons);
+        //HighlightFirstButton(controlsMenuButtons);
     }
 
     public void ShowContacts()
@@ -163,8 +172,8 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         mainMenuPanel.SetActive(false);
         contactsPanel.SetActive(true);
-        
-        HighlightFirstButton(contactsMenuButtons);
+        SetSelectedButton(contactsMenuButton);
+        //HighlightFirstButton(contactsMenuButtons);
     }
 
     public void GoBackToMainMenu()
@@ -179,7 +188,9 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         inGameMenuPanel.SetActive(true);
         Time.timeScale = 0; // Pause the game
-        HighlightFirstButton(inGameMenuButtons);
+        SetSelectedButton(inGameMenuButton);
+
+        //HighlightFirstButton(inGameMenuButtons);
     }
 
     public void HideInGameMenu()
@@ -211,7 +222,8 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         winMenuPanel.SetActive(true);
         Time.timeScale = 0; // Pause the game
-        HighlightFirstButton(winMenuButtons);
+        SetSelectedButton(winMenuButton);
+        //HighlightFirstButton(winMenuButtons);
     }
 
     public void ShowLoseMenu()
@@ -219,7 +231,9 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         loseMenuPanel.SetActive(true);
         Time.timeScale = 0; // Pause the game
-        HighlightFirstButton(loseMenuButtons);
+        SetSelectedButton(loseMenuButton);
+
+        //HighlightFirstButton(loseMenuButtons);
     }
 
     private void TeleportPlayerToLevel(int levelIndex)
@@ -234,6 +248,7 @@ public class UIManager : MonoBehaviour
     {
         PushCurrentMenu();
         GameOverPanel.SetActive(true);
+        SetSelectedButton(feedbackMenuButton);
     }
     
     public void ShowGrayChatterMenu()
@@ -241,7 +256,8 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         grayChatterMenuPanel.SetActive(true);
         Time.timeScale = 0; // Pause the game
-        HighlightFirstButton(grayChatterMenuButtons);
+        SetSelectedButton(grayChatterMenuButton);
+        //HighlightFirstButton(grayChatterMenuButtons);
     }
 
     public void HideGrayChatterMenu()

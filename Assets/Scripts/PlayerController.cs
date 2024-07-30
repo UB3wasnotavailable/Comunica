@@ -36,14 +36,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("in update");
         if (isRotating)
         {
             RotatePlayer();
         }
         else
         {
-            Debug.Log("non ruoto");
             if (currentSpeed == 0)
             {
                 CheckForBlueChatters();
