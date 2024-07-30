@@ -36,15 +36,18 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("in update");
         if (isRotating)
         {
             RotatePlayer();
         }
         else
         {
+            Debug.Log("non ruoto");
             if (currentSpeed == 0)
             {
                 CheckForBlueChatters();
+                Debug.Log("cercando blue chatters");
             }
 
             if (isChatting == true)
@@ -274,7 +277,7 @@ public class PlayerController : MonoBehaviour
             float separationDistance = 0.7f;
             transform.position = currentChatter.transform.position + cardinalDirection * separationDistance;
         }
-        moveDirection = Vector3.zero; 
+        moveDirection = Vector3.zero;
     }
     
     void AttractToChatter(Transform chatterTransform)
@@ -282,13 +285,13 @@ public class PlayerController : MonoBehaviour
         Vector3 directionToChatter = chatterTransform.position - transform.position;
         moveDirection = GetCardinalDirection(directionToChatter);
         currentSpeed = speed;
-        if (currentChatter.isDisappearing)
-        {
-            // per ora sale 5 sec ma poi torna giù. Da rivedere (spegnere il rigidbody o farlo salire per più tempo)
-            var currentChatterScript = currentChatter.GetComponent<Chatter>();
-            currentChatterScript.StartMoving(Vector3.up, 5);
-            // currentChatter.gameObject.SetActive(false);
-        }
+        // if (currentChatter.isDisappearing)
+        // {
+        //     // per ora sale 5 sec ma poi torna giù. Da rivedere (spegnere il rigidbody o farlo salire per più tempo)
+        //     var currentChatterScript = currentChatter.GetComponent<Chatter>();
+        //     currentChatterScript.StartMoving(Vector3.up, 5);
+        //     // currentChatter.gameObject.SetActive(false);
+        // }
         isChatting = false;
     }
     
@@ -390,6 +393,7 @@ public class PlayerController : MonoBehaviour
             Chatter closestBlueChatter = GetClosestChatter(blueChatters);
             if (closestBlueChatter != null)
             {
+                Debug.Log("Found closest blue chatter: " + closestBlueChatter.gameObject.name);
                 AttractToChatter(closestBlueChatter.transform);
             }
         }

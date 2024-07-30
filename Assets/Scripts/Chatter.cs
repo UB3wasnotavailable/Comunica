@@ -77,21 +77,21 @@ public class Chatter : MonoBehaviour
         UpdateBalloonColor();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            interactionManager.ActivateDialogueBox(interactionManager.dialogueIndex);
-            if (interactionManager.dialogueIndex < interactionManager.dialogueBoxes.Length)
-            {
-                interactionManager.dialogueIndex += 1;
-            }
-            else
-            {
-                interactionManager.dialogueIndex = 0;
-            }
-        }
-    }
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.CompareTag("Player"))
+    //     {
+    //         interactionManager.ActivateDialogueBox(interactionManager.dialogueIndex);
+    //         if (interactionManager.dialogueIndex < interactionManager.dialogueBoxes.Length)
+    //         {
+    //             interactionManager.dialogueIndex += 1;
+    //         }
+    //         else
+    //         {
+    //             interactionManager.dialogueIndex = 0;
+    //         }
+    //     }
+    // }
 
     void UpdateColor()
     {

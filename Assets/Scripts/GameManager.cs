@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
         player.transform.position = level.spawnPoint.position;
         player.TeleportTo(level.spawnPoint.position, level.spawnPoint.rotation);
         player.currentSpeed = 0;
+        Debug.Log("settando la velocità a 0");
         player.isChatting = false;
 
         foreach (Level lvl in levels)
