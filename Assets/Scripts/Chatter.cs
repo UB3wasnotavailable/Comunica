@@ -11,6 +11,7 @@ public class Chatter : MonoBehaviour
     
     public enum ChatterType { Red, Black, Blue, Yellow, Gray }
     public ChatterType chatterType;
+    public Chatter twinChatter;
     public bool isDancing;
     public bool isDisappearing;
     public float dancingAngle = 180f;
@@ -46,6 +47,10 @@ public class Chatter : MonoBehaviour
         EnsureMaterialInstance();
         UpdateColor();
         UpdateBalloonColor();
+        if (twinChatter != null)
+        {
+            OnChatterColorChanged += twinChatter.HandleTwinChatterColorChanged;
+        }
     }
 
     private void Update()
@@ -79,7 +84,7 @@ public class Chatter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && chatterType != ChatterType.Yellow)
         {
             interactionManager.ActivateDialogueBox(interactionManager.dialogueIndex);
             if (interactionManager.dialogueIndex < interactionManager.dialogueBoxes.Length)
@@ -222,7 +227,11 @@ public class Chatter : MonoBehaviour
     {
         StartCoroutine(MoveForDuration(direction, duration));
     }
-    
+    public void HandleTwinChatterColorChanged(Chatter originalChatter)
+    {
+        ChangeChatterType(originalChatter.chatterType);
+    }
+
     public IEnumerator MoveForDuration(Vector3 direction, float duration)
     {
         float elapsedTime = 0f;

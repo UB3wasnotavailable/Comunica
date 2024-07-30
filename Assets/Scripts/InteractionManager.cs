@@ -23,9 +23,9 @@ public class InteractionManager : MonoBehaviour
 
     public void ResetBoxes()
     {
-        foreach (var VARIABLE in dialogueBoxes)
+        foreach (var GameObject in dialogueBoxes)
         {
-            VARIABLE.SetActive(false);
+            GameObject.SetActive(false);
         }
     }
 }
