@@ -181,6 +181,7 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         GM.currentLevelIndex = 0;
         ShowMainMenu();
+        Debug.Log("cerco di tornare al main menu");
     }
 
     public void ShowInGameMenu()
@@ -283,6 +284,9 @@ public class UIManager : MonoBehaviour
             GameObject previousMenu = menuHistory.Pop();
             HideAllMenus();
             previousMenu.SetActive(true);
+            Button previousMenuButton = previousMenu.GetComponentInChildren<Button>();
+            SetSelectedButton(previousMenuButton);
+            Debug.Log("cerco di tornare indietro");
         }
         else
         {
