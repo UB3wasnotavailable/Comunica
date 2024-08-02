@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
         // Move player to spawn position
         player.transform.position = level.spawnPoint.position;
-        player.TeleportTo(level.spawnPoint.position, level.spawnPoint.rotation);
+        player.TeleportTo(level.spawnPoint.position, (level.spawnPoint.rotation * Quaternion.Euler(90,0,0)));
         player.currentSpeed = 0;
         Debug.Log("settando la velocità a 0");
         player.isChatting = false;

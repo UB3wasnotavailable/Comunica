@@ -80,6 +80,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
+    <Compile Include="Assets\2D Animation Starter Pack\Demo\AnimationController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
@@ -665,6 +666,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="spine-unity-examples.Player.csproj">
+      <Project>{4a9c04a6-6a8c-db9a-8adb-f1eab31db212}</Project>
+      <Name>spine-unity-examples.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="spine-csharp.Player.csproj">
+      <Project>{59f0bfc2-9c5f-3662-fe27-3037f39ce8bc}</Project>
+      <Name>spine-csharp.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.Core.Player.csproj">
+      <Project>{36429024-c380-2775-36a4-2aac305d8c1b}</Project>
+      <Name>Unity.VisualScripting.Core.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.UI.Player.csproj">
+      <Project>{e200854e-f855-0e32-99c7-3b06ab53c0e9}</Project>
+      <Name>UnityEngine.UI.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualScripting.Flow.Player.csproj">
+      <Project>{19688404-d060-8b96-ad86-4c367aa7ee77}</Project>
+      <Name>Unity.VisualScripting.Flow.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Timeline.Player.csproj">
       <Project>{f905ee6b-4480-2a1e-76b7-8377f697cf55}</Project>
       <Name>Unity.Timeline.Player</Name>
@@ -677,25 +698,17 @@
       <Project>{05172da0-10b5-3335-5a3e-999b3c71b1ab}</Project>
       <Name>Unity.InputSystem.ForUI.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.Player.csproj">
-      <Project>{e200854e-f855-0e32-99c7-3b06ab53c0e9}</Project>
-      <Name>UnityEngine.UI.Player</Name>
+    <ProjectReference Include="spine-unity.Player.csproj">
+      <Project>{935fdfb6-f824-5f91-3d2f-7780c09e6fe6}</Project>
+      <Name>spine-unity.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.Player.csproj">
       <Project>{813f84fe-10d5-06ff-dd3c-4bf408873d87}</Project>
       <Name>Unity.TextMeshPro.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Core.Player.csproj">
-      <Project>{36429024-c380-2775-36a4-2aac305d8c1b}</Project>
-      <Name>Unity.VisualScripting.Core.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.State.Player.csproj">
       <Project>{ab058301-bc2c-1213-bf63-a97d9258fded}</Project>
       <Name>Unity.VisualScripting.State.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Flow.Player.csproj">
-      <Project>{19688404-d060-8b96-ad86-4c367aa7ee77}</Project>
-      <Name>Unity.VisualScripting.Flow.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

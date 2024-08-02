@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float currentSpeed;
     public bool isSpeedAdjusted = false;
     private Vector3 moveDirection;
+    private Vector3 lastMoveDirection;
     public bool isChatting = false;
     private Chatter currentChatter = null; 
     public InteractionManager interactionManager;
@@ -78,11 +79,39 @@ public class PlayerController : MonoBehaviour
 
             if (isChatting)
             {
-                anim.SetTrigger("StopWalking");
+                switch (lastMoveDirection)
+                {
+                    case var forward when lastMoveDirection == Vector3.forward:
+                        anim.SetTrigger("StopWalkingUp");
+                        break;
+                    case var back when lastMoveDirection == Vector3.back:
+                        anim.SetTrigger("StopWalkingDown");
+                        break;
+                    case var left when lastMoveDirection == Vector3.left:
+                        anim.SetTrigger("StopWalkingLeft");
+                        break;
+                    case var right when lastMoveDirection == Vector3.right:
+                        anim.SetTrigger("StopWalkingRight");
+                        break;
+                }
             }
             else
             {
-                anim.SetTrigger("StartWalking");
+                switch (moveDirection)
+                {
+                    case var forward when moveDirection == Vector3.forward:
+                        anim.SetTrigger("StartWalkingUp");
+                        break;
+                    case var back when moveDirection == Vector3.back:
+                        anim.SetTrigger("StartWalkingDown");
+                        break;
+                    case var left when moveDirection == Vector3.left:
+                        anim.SetTrigger("StartWalkingLeft");
+                        break;
+                    case var right when moveDirection == Vector3.right:
+                        anim.SetTrigger("StartWalkingRight");
+                        break;
+                }
             }
         }
     }
@@ -134,6 +163,8 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        lastMoveDirection = moveDirection;
+
         if (other.CompareTag("Wall"))
         {
             GM.ui.ShowLoseMenu();
@@ -234,7 +265,7 @@ public class PlayerController : MonoBehaviour
                 Stop();
                 isChatting = false;
                 GM.ui.ShowWinMenu();
-                interactionManager.ResetBoxes();
+                // interactionManager.ResetBoxes();
                 break;
             case Chatter.ChatterType.Gray:
                 GM.ui.ShowGrayChatterMenu();

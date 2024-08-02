@@ -82,8 +82,8 @@
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.5\Editor\CommandLineParser\ICommandLineOption.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.5\Editor\Logging\LogVerbosityLevel.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.5\Editor\Events\CoverageEventData.cs" />
-    <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.5\Editor\CoverageWindow\PathToAddDropDownMenu.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.5\Editor\CoverageWindow\PathToAddHandler.cs" />
+    <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.5\Editor\CoverageWindow\PathToAddDropDownMenu.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.5\Editor\ICoverageReporterFilter.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.5\Editor\CoverageReporterManager.cs" />
     <Compile Include="Library\PackageCache\com.unity.testtools.codecoverage@1.2.5\Editor\CoverageWindow\FolderType.cs" />
