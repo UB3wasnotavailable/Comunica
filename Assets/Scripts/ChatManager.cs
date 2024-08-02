@@ -12,6 +12,7 @@ public class ChatManager : MonoBehaviour
     public float timerChat = 3f;
 
     public GameObject chatPanel, textObject;
+    public ScrollRect scrollRect;
     
     [SerializeField]
     private List<Message> messageList = new List<Message>();
@@ -41,6 +42,8 @@ public class ChatManager : MonoBehaviour
         newMessage.textObject = newText.GetComponent<TMP_Text>();
         newMessage.textObject.text = newMessage.text;
         messageList.Add(newMessage);
+        
+        scrollRect.verticalNormalizedPosition = 0f;
     }
 
     private IEnumerator PopTimedChatMessage()

@@ -2925,9 +2925,9 @@ RectTransform:
   m_Father: {fileID: 1229597121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -17}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &612806487
 MonoBehaviour:
@@ -3707,6 +3707,10 @@ PrefabInstance:
       value: 0.11764707
       objectReference: {fileID: 0}
     - target: {fileID: 6746869335453804620, guid: b54532790167703419647ff1682a71e0, type: 3}
+      propertyPath: chatPanel
+      value: 
+      objectReference: {fileID: 1229597120}
+    - target: {fileID: 6746869335453804620, guid: b54532790167703419647ff1682a71e0, type: 3}
       propertyPath: winMenuButton
       value: 
       objectReference: {fileID: 775529583}
@@ -3912,6 +3916,7 @@ MonoBehaviour:
   timerChat: 3
   chatPanel: {fileID: 224834079}
   textObject: {fileID: 2145917137144950681, guid: 7288169f569abe240a6eca30e7b23f85, type: 3}
+  scrollRect: {fileID: 1229597122}
   messageList: []
 --- !u!4 &689041863 stripped
 Transform:
@@ -6232,7 +6237,7 @@ RectTransform:
   m_Father: {fileID: 422831541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6766,7 +6771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1229597121
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6806,14 +6811,14 @@ MonoBehaviour:
   m_Vertical: 1
   m_MovementType: 2
   m_Elasticity: 0.1
-  m_Inertia: 1
+  m_Inertia: 0
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 612806486}
   m_HorizontalScrollbar: {fileID: 699958072}
   m_VerticalScrollbar: {fileID: 2049077052}
   m_HorizontalScrollbarVisibility: 2
-  m_VerticalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 1
   m_HorizontalScrollbarSpacing: -3
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
@@ -11178,9 +11183,9 @@ RectTransform:
   m_Father: {fileID: 1229597121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 20, y: -17}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &2049077052
 MonoBehaviour:
@@ -11226,7 +11231,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1171916854}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
