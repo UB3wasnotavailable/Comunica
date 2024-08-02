@@ -90,23 +90,23 @@ public class PlayerController : MonoBehaviour
     {
         transform.position += moveDirection * currentSpeed * Time.deltaTime;
         
-        Quaternion targetRotation = Quaternion.identity;
-        switch (moveDirection)
-        {
-            case Vector3 forward when moveDirection == Vector3.forward:
-                targetRotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case Vector3 back when moveDirection == Vector3.back:
-                targetRotation = Quaternion.Euler(0, 180, 0);
-                break;
-            case Vector3 left when moveDirection == Vector3.left:
-                targetRotation = Quaternion.Euler(0, 270, 0);
-                break;
-            case Vector3 right when moveDirection == Vector3.right:
-                targetRotation = Quaternion.Euler(0, 90, 0); 
-                break;
-        }
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        //Quaternion targetRotation = Quaternion.identity;
+        //switch (moveDirection)
+        //{
+        //    case Vector3 forward when moveDirection == Vector3.forward:
+        //        targetRotation = Quaternion.Euler(0, 0, 0);
+        //        break;
+        //    case Vector3 back when moveDirection == Vector3.back:
+        //        targetRotation = Quaternion.Euler(0, 180, 0);
+        //        break;
+        //    case Vector3 left when moveDirection == Vector3.left:
+        //        targetRotation = Quaternion.Euler(0, 270, 0);
+        //        break;
+        //    case Vector3 right when moveDirection == Vector3.right:
+        //        targetRotation = Quaternion.Euler(0, 90, 0); 
+        //        break;
+        //}
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
     
     void AdjustSpeedBasedOnDistance()
