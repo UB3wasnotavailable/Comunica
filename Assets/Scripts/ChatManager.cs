@@ -9,6 +9,7 @@ public class ChatManager : MonoBehaviour
     //da vedere se vogliamo un massimo quindi per ora metto un botto ma non so se è l'ideale 
     // dal punto di vista delle performance
     public int maxMessagesInChat = 10000;
+    public float timerChat = 3f;
 
     public GameObject chatPanel, textObject;
     
@@ -17,7 +18,7 @@ public class ChatManager : MonoBehaviour
     
     void Start()
     {
-        
+        StartCoroutine(PopTimedChatMessage());
     }
     void Update()
     {
@@ -40,6 +41,19 @@ public class ChatManager : MonoBehaviour
         newMessage.textObject = newText.GetComponent<TMP_Text>();
         newMessage.textObject.text = newMessage.text;
         messageList.Add(newMessage);
+    }
+
+    private IEnumerator PopTimedChatMessage()
+    {
+        while (true)
+        {
+            if (Time.timeScale != 0)
+            {
+                SendMessageToChat("questo messaggio è nella tua testa ahahahahah. sono passati " + Time.time + " secondi");
+            }
+
+            yield return new WaitForSeconds(timerChat);
+        }
     }
 }
 
