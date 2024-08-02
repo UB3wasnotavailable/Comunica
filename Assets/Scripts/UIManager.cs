@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class UIManager : MonoBehaviour
     public GameObject loseMenuPanel;
     public GameObject GameOverPanel;
     public GameObject grayChatterMenuPanel;
+    public GameObject feedbackMenuPanel;
     public GameObject chatPanel;
 
     public GameObject player;
@@ -19,6 +22,20 @@ public class UIManager : MonoBehaviour
     public GameManager GM;
     public Camera mainCamera;
     private Stack<GameObject> menuHistory = new Stack<GameObject>();
+    
+    public GameObject selectionPointer;
+    private EventSystem eventSystem;
+   
+    public int currentButtonIndex = 0;
+    public Button mainMenuButton;
+    public Button controlsMenuButton;
+    public Button contactsMenuButton;
+    public Button inGameMenuButton;
+    public Button winMenuButton;
+    public Button loseMenuButton;
+    public Button gameOverMenuButton;
+    public Button feedbackMenuButton;
+    public Button grayChatterMenuButton;
 
     private Vector3[] levelPositions = new Vector3[] {
         new Vector3(0, 0, 0),
@@ -34,8 +51,77 @@ public class UIManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
         GM = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        eventSystem = EventSystem.current;
         ShowMainMenu();
     }
+    
+    // void Update()
+    // {
+    //     HandleMenuNavigation();
+    // }
+    //
+    // void HandleMenuNavigation()
+    // {
+    //     Button[] buttons = GetCurrentMenuButtons();
+    //     if (buttons.Length == 0) return;
+    //     
+    //     if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+    //     {
+    //         currentButtonIndex--;
+    //         if (currentButtonIndex < 0) currentButtonIndex = buttons.Length - 1;
+    //         HighlightButton(buttons[currentButtonIndex]);
+    //     }
+    //     else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+    //     {
+    //         currentButtonIndex++;
+    //         if (currentButtonIndex >= buttons.Length) currentButtonIndex = 0;
+    //         HighlightButton(buttons[currentButtonIndex]);
+    //     }
+    //     else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+    //     {
+    //         Button selectedButton = buttons[currentButtonIndex];
+    //         selectedButton.onClick.Invoke();
+    //         EventSystem.current.SetSelectedGameObject(null);
+    //         Debug.Log("sto cliccando spazio");
+    //     }
+    // }
+    //
+    // void HighlightButton(Button button)
+    // {
+    //     EventSystem.current.SetSelectedGameObject(null);
+    //     EventSystem.current.SetSelectedGameObject(button.gameObject);
+    //     
+    //     RectTransform arrowTransform = selectionPointer.GetComponent<RectTransform>();
+    //     RectTransform buttonTransform = button.GetComponent<RectTransform>();
+    //     arrowTransform.position = new Vector3(buttonTransform.position.x + buttonTransform.sizeDelta.x / 2 + 10, buttonTransform.position.y, buttonTransform.position.z);
+    // }
+    //
+    // void HighlightFirstButton(Button[] buttons)
+    // {
+    //     if (buttons.Length > 0)
+    //     {
+    //         currentButtonIndex = 0;
+    //         HighlightButton(buttons[currentButtonIndex]);
+    //     }
+    // }
+    
+    private void SetSelectedButton(Button button)
+    {
+        eventSystem.SetSelectedGameObject(null); // Deselect any currently selected object
+        eventSystem.SetSelectedGameObject(button.gameObject); // Select the new button
+    }
+    // Button[] GetCurrentMenuButtons()
+    // {
+    //     if (mainMenuPanel.activeSelf) return mainMenuButtons;
+    //     if (controlsPanel.activeSelf) return controlsMenuButtons;
+    //     if (contactsPanel.activeSelf) return contactsMenuButtons;
+    //     if (inGameMenuPanel.activeSelf) return inGameMenuButtons;
+    //     if (winMenuPanel.activeSelf) return winMenuButtons;
+    //     if (loseMenuPanel.activeSelf) return loseMenuButtons;
+    //     if (grayChatterMenuPanel.activeSelf) return grayChatterMenuButtons;
+    //     return new Button[0];
+    // }
+
 
     public void ShowMainMenu()
     {
@@ -50,6 +136,11 @@ public class UIManager : MonoBehaviour
         GameOverPanel.SetActive(false);
         grayChatterMenuPanel.SetActive(false);
         chatPanel.SetActive(false);
+        SetSelectedButton(mainMenuButton);
+
+        Debug.Log("entrato in main menu");
+
+        //HighlightFirstButton(mainMenuButtons);
     }
 
     public void StartGame()
@@ -59,15 +150,21 @@ public class UIManager : MonoBehaviour
         GM.StartLevel(GM.currentLevelIndex);
         playerController.isSpeedAdjusted = false;
         chatPanel.SetActive(true);
+        Debug.Log("starting game");
     }
 
     public void ShowControls()
     {
         PushCurrentMenu();
-        mainMenuPanel.SetActive(false);
         inGameMenuPanel.SetActive(false);
         controlsPanel.SetActive(true);
         chatPanel.SetActive(false);
+        mainMenuPanel.SetActive(false);
+        SetSelectedButton(controlsMenuButton);
+
+        Debug.Log("entrato in controls");
+        
+        //HighlightFirstButton(controlsMenuButtons);
     }
 
     public void ShowContacts()
@@ -75,6 +172,8 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         mainMenuPanel.SetActive(false);
         contactsPanel.SetActive(true);
+        SetSelectedButton(contactsMenuButton);
+        //HighlightFirstButton(contactsMenuButtons);
     }
 
     public void GoBackToMainMenu()
@@ -82,6 +181,7 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         GM.currentLevelIndex = 0;
         ShowMainMenu();
+        Debug.Log("cerco di tornare al main menu");
     }
 
     public void ShowInGameMenu()
@@ -89,6 +189,9 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         inGameMenuPanel.SetActive(true);
         Time.timeScale = 0; // Pause the game
+        SetSelectedButton(inGameMenuButton);
+
+        //HighlightFirstButton(inGameMenuButtons);
     }
 
     public void HideInGameMenu()
@@ -104,6 +207,7 @@ public class UIManager : MonoBehaviour
         //TeleportPlayerToLevel(currentLevel);
         GM.ResetLevel();
         HideInGameMenu();
+        playerController.currentSpeed = 0;
         playerController.isSpeedAdjusted = false;
     }
 
@@ -119,6 +223,8 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         winMenuPanel.SetActive(true);
         Time.timeScale = 0; // Pause the game
+        SetSelectedButton(winMenuButton);
+        //HighlightFirstButton(winMenuButtons);
     }
 
     public void ShowLoseMenu()
@@ -126,6 +232,9 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         loseMenuPanel.SetActive(true);
         Time.timeScale = 0; // Pause the game
+        SetSelectedButton(loseMenuButton);
+
+        //HighlightFirstButton(loseMenuButtons);
     }
 
     private void TeleportPlayerToLevel(int levelIndex)
@@ -140,6 +249,7 @@ public class UIManager : MonoBehaviour
     {
         PushCurrentMenu();
         GameOverPanel.SetActive(true);
+        SetSelectedButton(feedbackMenuButton);
     }
     
     public void ShowGrayChatterMenu()
@@ -147,6 +257,8 @@ public class UIManager : MonoBehaviour
         PushCurrentMenu();
         grayChatterMenuPanel.SetActive(true);
         Time.timeScale = 0; // Pause the game
+        SetSelectedButton(grayChatterMenuButton);
+        //HighlightFirstButton(grayChatterMenuButtons);
     }
 
     public void HideGrayChatterMenu()
@@ -172,6 +284,9 @@ public class UIManager : MonoBehaviour
             GameObject previousMenu = menuHistory.Pop();
             HideAllMenus();
             previousMenu.SetActive(true);
+            Button previousMenuButton = previousMenu.GetComponentInChildren<Button>();
+            SetSelectedButton(previousMenuButton);
+            Debug.Log("cerco di tornare indietro");
         }
         else
         {

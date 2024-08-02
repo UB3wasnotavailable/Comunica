@@ -18,6 +18,8 @@ public class Chatter : MonoBehaviour
     public Transform hat;
     public Transform balloon;
     public InteractionManager interactionManager;
+    public GameManager GM;
+    public ChatManager chatManager;
 
     private Renderer hatRenderer;
     private Renderer balloonRenderer;
@@ -40,6 +42,8 @@ public class Chatter : MonoBehaviour
         initialRotation = transform.rotation;
         initialType = chatterType;
         interactionManager = GameObject.Find("Canvas").GetComponentInChildren<InteractionManager>();
+        GM = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        chatManager = GameObject.Find("Canvas").GetComponent<ChatManager>();
     }
     
     private void Start()
@@ -86,16 +90,21 @@ public class Chatter : MonoBehaviour
     {
         if (other.CompareTag("Player") && chatterType != ChatterType.Yellow)
         {
-            interactionManager.ActivateDialogueBox(interactionManager.dialogueIndex);
-            if (interactionManager.dialogueIndex < interactionManager.dialogueBoxes.Length)
-            {
-                interactionManager.dialogueIndex += 1;
-            }
-            else
-            {
-                interactionManager.dialogueIndex = 0;
-            }
+            chatManager.SendMessageToChat("ciao, sono un chatter di tipo: " + chatterType);
         }
+        
+        // if (other.CompareTag("Player"))
+        // {
+        //     interactionManager.ActivateDialogueBox(interactionManager.dialogueIndex);
+        //     if (interactionManager.dialogueIndex < interactionManager.dialogueBoxes.Length)
+        //     {
+        //         interactionManager.dialogueIndex += 1;
+        //     }
+        //     else
+        //     {
+        //         interactionManager.dialogueIndex = 0;
+        //     }
+        // }
     }
 
     void UpdateColor()
