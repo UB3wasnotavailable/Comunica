@@ -39,13 +39,13 @@ public class ChatManager : MonoBehaviour
         Message newMessage = new Message();
         newMessage.text = text;
         GameObject newText = Instantiate(textObject, chatPanel.transform);
-        newMessage.textObject = newText.GetComponent<TMP_Text>();
+        newMessage.textObject = newText.GetComponentInChildren<TMP_Text>();
         newMessage.textObject.text = newMessage.text;
         messageList.Add(newMessage);
         
         scrollRect.verticalNormalizedPosition = 0f;
     }
-
+    
     private IEnumerator PopTimedChatMessage()
     {
         while (true)
