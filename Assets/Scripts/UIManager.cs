@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     public GameObject grayChatterMenuPanel;
     public GameObject feedbackMenuPanel;
     public GameObject chatPanel;
+    public GameObject levelSelectorPanel;
 
     public GameObject player;
     private PlayerController playerController;
@@ -36,6 +37,7 @@ public class UIManager : MonoBehaviour
     public Button gameOverMenuButton;
     public Button feedbackMenuButton;
     public Button grayChatterMenuButton;
+    public Button levelSelectorButton;
 
     private Vector3[] levelPositions = new Vector3[] {
         new Vector3(0, 0, 0),
@@ -136,6 +138,7 @@ public class UIManager : MonoBehaviour
         GameOverPanel.SetActive(false);
         grayChatterMenuPanel.SetActive(false);
         chatPanel.SetActive(false);
+        levelSelectorPanel.SetActive(false);
         SetSelectedButton(mainMenuButton);
 
         Debug.Log("entrato in main menu");
@@ -174,6 +177,20 @@ public class UIManager : MonoBehaviour
         contactsPanel.SetActive(true);
         SetSelectedButton(contactsMenuButton);
         //HighlightFirstButton(contactsMenuButtons);
+    }
+
+    public void ShowLevelSelector()
+    {
+        PushCurrentMenu();
+        mainMenuPanel.SetActive(false);
+        levelSelectorPanel.SetActive(true);
+        SetSelectedButton(levelSelectorButton);
+    }
+    
+    public void SelectLevel(int levelNumber)
+    {
+        levelSelectorPanel.SetActive(false);
+        GM.StartLevel(levelNumber - 1);
     }
 
     public void GoBackToMainMenu()
@@ -312,6 +329,7 @@ public class UIManager : MonoBehaviour
         if (winMenuPanel.activeSelf) return winMenuPanel;
         if (loseMenuPanel.activeSelf) return loseMenuPanel;
         if (grayChatterMenuPanel.activeSelf) return grayChatterMenuPanel;
+        if (levelSelectorPanel.activeSelf) return levelSelectorPanel;
         return null;
     }
     
@@ -324,5 +342,6 @@ public class UIManager : MonoBehaviour
         winMenuPanel.SetActive(false);
         loseMenuPanel.SetActive(false);
         grayChatterMenuPanel.SetActive(false);
+        levelSelectorPanel.SetActive(false);
     }
 }
