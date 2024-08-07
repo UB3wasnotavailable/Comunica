@@ -54,15 +54,18 @@ public class PlayerController : MonoBehaviour
                 Chatter closestChatter = GetClosestChatter();
                 currentChatter = closestChatter;
 
-                if (Input.GetKeyDown(KeyCode.K))
+                if (Time.timeScale != 0)
                 {
-                    currentChatter.ChangeChatterType(Chatter.ChatterType.Red);
+                    if (Input.GetKeyDown(KeyCode.K))
+                    {
+                        currentChatter.ChangeChatterType(Chatter.ChatterType.Red);
+                    }
+                    else if (Input.GetKeyDown(KeyCode.J))
+                    {
+                        currentChatter.ChangeChatterType(Chatter.ChatterType.Black);
+                    }
                 }
-                else if (Input.GetKeyDown(KeyCode.J))
-                {
-                    currentChatter.ChangeChatterType(Chatter.ChatterType.Black);
-                }
-
+                
                 HandleChatterInteraction(currentChatter);
             }
             else
@@ -184,11 +187,11 @@ public class PlayerController : MonoBehaviour
                     StartRotationWithChatter(currentChatter);
                 }
                 
-                if (currentChatter.chatterType == Chatter.ChatterType.Gray && !isIgnoring)
-                {
-                    GM.ui.ShowGrayChatterMenu();
-                    isIgnoring = true;
-                }
+                // if (currentChatter.chatterType == Chatter.ChatterType.Gray && !isIgnoring)
+                // {
+                //     isIgnoring = true;
+                //     GM.ui.ShowGrayChatterMenu();
+                // }
             }
         }
     }
@@ -203,6 +206,7 @@ public class PlayerController : MonoBehaviour
 
                 if (currentChatter.chatterType == Chatter.ChatterType.Gray)
                 {
+                    Debug.Log("me ne sto andando da un chatter grigio");
                     StartCoroutine(ResetColliderToTrigger(currentChatter.GetComponent<Collider>(), 0.5f));
                     currentChatter.ChangeChatterType(Chatter.ChatterType.Gray);
                     isIgnoring = false;
@@ -268,7 +272,11 @@ public class PlayerController : MonoBehaviour
                 // interactionManager.ResetBoxes();
                 break;
             case Chatter.ChatterType.Gray:
-                GM.ui.ShowGrayChatterMenu();
+                if (!isIgnoring)
+                {
+                    GM.ui.ShowGrayChatterMenu();
+                    isIgnoring = true;
+                }
                 break;
         }
     }
@@ -473,7 +481,7 @@ public class PlayerController : MonoBehaviour
         for (int i = interactedGrayChatters.Count - 1; i >= 0; i--)
         {
             Chatter chatter = interactedGrayChatters[i];
-            if (Vector3.Distance(transform.position, chatter.transform.position) > 1.5f) 
+            if (Vector3.Distance(transform.position, chatter.transform.position) > 0.7f) 
             {
                 chatter.ChangeChatterType(Chatter.ChatterType.Gray);
                 interactedGrayChatters.RemoveAt(i);
