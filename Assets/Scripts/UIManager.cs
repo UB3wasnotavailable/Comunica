@@ -183,6 +183,7 @@ public class UIManager : MonoBehaviour
     {
         PushCurrentMenu();
         mainMenuPanel.SetActive(false);
+        inGameMenuPanel.SetActive(false);
         levelSelectorPanel.SetActive(true);
         SetSelectedButton(levelSelectorButton);
     }
@@ -191,6 +192,7 @@ public class UIManager : MonoBehaviour
     {
         levelSelectorPanel.SetActive(false);
         GM.StartLevel(levelNumber - 1);
+        Time.timeScale = 1;
     }
 
     public void GoBackToMainMenu()
