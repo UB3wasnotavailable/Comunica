@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private float rotationSpeed = 180f;
     private Queue<Chatter.ChatterType> lastThreeChatters = new Queue<Chatter.ChatterType>(3);
     private List<Chatter> interactedGrayChatters = new List<Chatter>();
-    private bool isIgnoring = false;
+    public bool isIgnoring = false;
 
     private void Start()
     {
@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.K))
                     {
                         currentChatter.ChangeChatterType(Chatter.ChatterType.Red);
+                        isIgnoring = false;
                     }
                     else if (Input.GetKeyDown(KeyCode.J))
                     {
