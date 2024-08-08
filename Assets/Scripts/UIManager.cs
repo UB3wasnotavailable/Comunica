@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -17,6 +18,8 @@ public class UIManager : MonoBehaviour
     public GameObject feedbackMenuPanel;
     public GameObject chatPanel;
     public GameObject levelSelectorPanel;
+
+    public TMP_Text levelWarningText;
 
     public GameObject player;
     private PlayerController playerController;
@@ -130,10 +133,21 @@ public class UIManager : MonoBehaviour
     
     public void SelectLevel(int levelNumber)
     {
-        levelSelectorPanel.SetActive(false);
-        GM.currentLevelIndex = (levelNumber - 1);
-        GM.StartLevel(levelNumber - 1);
-        Time.timeScale = 1;
+        if (levelNumber > GM.levels.Count)
+        {
+            // Show the warning message
+            levelWarningText.text = $"We're working on that level, the max number you can press for now is {GM.levels.Count}.";
+            levelWarningText.gameObject.SetActive(true);
+        }
+        else
+        {
+            levelWarningText.gameObject.SetActive(false);
+            levelSelectorPanel.SetActive(false);
+            chatPanel.SetActive(true);
+            GM.currentLevelIndex = (levelNumber - 1);
+            GM.StartLevel(levelNumber - 1);
+            Time.timeScale = 1;
+        }
     }
 
     public void GoBackToMainMenu()
