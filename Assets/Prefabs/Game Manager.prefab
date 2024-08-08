@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6594984751157873762}
   m_Layer: 0
   m_Name: Game Manager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,3 +44,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e37fc02c9d653542b59d31a6324d929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  ui: {fileID: 0}
+  levels:
+  - spawnPoint: {fileID: 0}
+    levelCamera: {fileID: 0}
+  - spawnPoint: {fileID: 0}
+    levelCamera: {fileID: 0}
+  - spawnPoint: {fileID: 0}
+    levelCamera: {fileID: 0}
+  - spawnPoint: {fileID: 0}
+    levelCamera: {fileID: 0}
+  - spawnPoint: {fileID: 0}
+    levelCamera: {fileID: 0}
+  currentLevelIndex: 0
