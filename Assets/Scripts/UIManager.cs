@@ -13,11 +13,17 @@ public class UIManager : MonoBehaviour
     public GameObject inGameMenuPanel;
     public GameObject winMenuPanel;
     public GameObject loseMenuPanel;
-    public GameObject GameOverPanel;
+    public GameObject gameOverPanel;
     public GameObject grayChatterMenuPanel;
     public GameObject feedbackMenuPanel;
     public GameObject chatPanel;
     public GameObject levelSelectorPanel;
+    public GameObject blueChatterControlsPanel;
+    public GameObject redChatterControlsPanel;
+    public GameObject blackChatterControlsPanel;
+    public GameObject greyChatterControlsPanel;
+    public GameObject strangeCasesPanel;
+
 
     public TMP_Text levelWarningText;
 
@@ -41,6 +47,11 @@ public class UIManager : MonoBehaviour
     public Button feedbackMenuButton;
     public Button grayChatterMenuButton;
     public Button levelSelectorButton;
+    public Button blueChatterControlsButton;
+    public Button redChatterControlsButton;
+    public Button blackChatterControlsButton;
+    public Button greyChatterControlsButton;
+    public Button strangeCasesButton;
 
     private Vector3[] levelPositions = new Vector3[] {
         new Vector3(0, 0, 0),
@@ -76,7 +87,7 @@ public class UIManager : MonoBehaviour
         inGameMenuPanel.SetActive(false);
         winMenuPanel.SetActive(false);
         loseMenuPanel.SetActive(false);
-        GameOverPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
         grayChatterMenuPanel.SetActive(false);
         chatPanel.SetActive(false);
         levelSelectorPanel.SetActive(false);
@@ -109,6 +120,51 @@ public class UIManager : MonoBehaviour
         Debug.Log("entrato in controls");
         
         //HighlightFirstButton(controlsMenuButtons);
+    }
+    
+    public void ShowBlueTutorial()
+    {
+        PushCurrentMenu();
+        controlsPanel.SetActive(false);
+        blueChatterControlsPanel.SetActive(true);
+        SetSelectedButton(blueChatterControlsButton);
+
+    }
+
+    public void ShowRedTutorial()
+    {
+        PushCurrentMenu();
+        controlsPanel.SetActive(false);
+        redChatterControlsPanel.SetActive(true);
+        SetSelectedButton(redChatterControlsButton);
+
+    }
+    
+    public void ShowBlackTutorial()
+    {
+        PushCurrentMenu();
+        controlsPanel.SetActive(false);
+        blackChatterControlsPanel.SetActive(true);
+        SetSelectedButton(blackChatterControlsButton);
+
+    }
+    
+    public void ShowGreyTutorial()
+    {
+        PushCurrentMenu();
+        controlsPanel.SetActive(false);
+        greyChatterControlsPanel.SetActive(true);
+        SetSelectedButton(greyChatterControlsButton);
+
+    }
+    
+    public void ShowOtherTutorial()
+    {
+        PushCurrentMenu();
+        controlsPanel.SetActive(false);
+        strangeCasesPanel.SetActive(true);
+        SetSelectedButton(strangeCasesButton);
+
     }
 
     public void ShowContacts()
@@ -222,7 +278,7 @@ public class UIManager : MonoBehaviour
     public void ShowFeedbackMenu()
     {
         PushCurrentMenu();
-        GameOverPanel.SetActive(true);
+        gameOverPanel.SetActive(true);
         SetSelectedButton(feedbackMenuButton);
     }
     
@@ -231,6 +287,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("entrato dentro il menu chatter grigio");
         PushCurrentMenu();
         grayChatterMenuPanel.SetActive(true);
+        chatPanel.SetActive(false);
         Time.timeScale = 0; // Pause the game
         SetSelectedButton(grayChatterMenuButton);
         //HighlightFirstButton(grayChatterMenuButtons);
@@ -239,6 +296,7 @@ public class UIManager : MonoBehaviour
     public void HideGrayChatterMenu()
     {
         grayChatterMenuPanel.SetActive(false);
+        chatPanel.SetActive(true);
         Time.timeScale = 1; // Resume the game
     }
     
@@ -301,5 +359,10 @@ public class UIManager : MonoBehaviour
         loseMenuPanel.SetActive(false);
         grayChatterMenuPanel.SetActive(false);
         levelSelectorPanel.SetActive(false);
+        blueChatterControlsPanel.SetActive(false);
+        redChatterControlsPanel.SetActive(false);
+        blackChatterControlsPanel.SetActive(false);
+        greyChatterControlsPanel.SetActive(false);
+        strangeCasesPanel.SetActive(false);
     }
 }
