@@ -192,7 +192,7 @@ public class UIManager : MonoBehaviour
         if (levelNumber > GM.levels.Count)
         {
             // Show the warning message
-            levelWarningText.text = $"We're working on that level, the max number you can press for now is {GM.levels.Count}.";
+            levelWarningText.text = $"We're working on that level, the max number you can press for now is {GM.levels.Count - 4}.";
             levelWarningText.gameObject.SetActive(true);
         }
         else
