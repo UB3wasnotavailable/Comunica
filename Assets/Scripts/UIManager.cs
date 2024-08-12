@@ -23,9 +23,11 @@ public class UIManager : MonoBehaviour
     public GameObject blackChatterControlsPanel;
     public GameObject greyChatterControlsPanel;
     public GameObject strangeCasesPanel;
+    public GameObject tutorialPanel;
 
 
     public TMP_Text levelWarningText;
+    public TMP_Text tutorialText;
 
     public GameObject player;
     private PlayerController playerController;
@@ -52,6 +54,7 @@ public class UIManager : MonoBehaviour
     public Button blackChatterControlsButton;
     public Button greyChatterControlsButton;
     public Button strangeCasesButton;
+    public Button tutorialButton;
 
     private Vector3[] levelPositions = new Vector3[] {
         new Vector3(0, 0, 0),
@@ -308,7 +311,7 @@ public class UIManager : MonoBehaviour
     {
         grayChatterMenuPanel.SetActive(false);
         chatPanel.SetActive(true);
-        Time.timeScale = 1; // Resume the game
+        Time.timeScale = 1;
     }
     
     public void GrayChatterOptionIgnore()
@@ -345,6 +348,21 @@ public class UIManager : MonoBehaviour
         {
             menuHistory.Push(activeMenu);
         }
+    }
+
+    public void ShowTutorialMenu(string message)
+    {
+        PushCurrentMenu();
+        tutorialText.text = message;
+        tutorialPanel.SetActive(true);
+        Time.timeScale = 0;
+        SetSelectedButton(tutorialButton);
+    }
+
+    public void HideTutorialMenu()
+    {
+        tutorialPanel.SetActive(false);
+        Time.timeScale = 1;
     }
     
     private GameObject GetActiveMenu()
