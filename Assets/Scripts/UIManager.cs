@@ -101,6 +101,17 @@ public class UIManager : MonoBehaviour
     public void StartGame()
     {
         mainMenuPanel.SetActive(false);
+        GM.currentLevelIndex = 4;
+        Time.timeScale = 1;
+        GM.StartLevel(GM.currentLevelIndex);
+        playerController.isSpeedAdjusted = false;
+        chatPanel.SetActive(true);
+        Debug.Log("starting game");
+    }
+    
+    public void StartTutorial()
+    {
+        mainMenuPanel.SetActive(false);
         Time.timeScale = 1;
         GM.StartLevel(GM.currentLevelIndex);
         playerController.isSpeedAdjusted = false;
