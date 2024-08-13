@@ -2440,7 +2440,7 @@ GameObject:
   - component: {fileID: 213571324}
   - component: {fileID: 213571326}
   - component: {fileID: 213571325}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3747,7 +3747,7 @@ GameObject:
   - component: {fileID: 300584246}
   - component: {fileID: 300584248}
   - component: {fileID: 300584247}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4504,7 +4504,7 @@ GameObject:
   - component: {fileID: 367760812}
   - component: {fileID: 367760814}
   - component: {fileID: 367760813}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4572,7 +4572,7 @@ GameObject:
   - component: {fileID: 370426205}
   - component: {fileID: 370426207}
   - component: {fileID: 370426206}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6003,7 +6003,7 @@ GameObject:
   - component: {fileID: 452787421}
   - component: {fileID: 452787423}
   - component: {fileID: 452787422}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6037,7 +6037,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e4f5dd3063b8214ba9ce1eb17277819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: "Il grigio \xE8 strano. Puoi interagirci o puoi ignorarlo."
+  message: "Il grigio \xE8 strano. Puoi interagirci o puoi ignorarlo. Se ci interagisci
+    diventa subito nero, altrimenti lo passi e basta."
   ui: {fileID: 0}
 --- !u!65 &452787423
 BoxCollider:
@@ -7653,7 +7654,7 @@ GameObject:
   - component: {fileID: 638215414}
   - component: {fileID: 638215416}
   - component: {fileID: 638215415}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9684,7 +9685,7 @@ GameObject:
   - component: {fileID: 795790487}
   - component: {fileID: 795790489}
   - component: {fileID: 795790488}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12665,7 +12666,7 @@ GameObject:
   - component: {fileID: 1097184771}
   - component: {fileID: 1097184773}
   - component: {fileID: 1097184772}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16414,7 +16415,7 @@ GameObject:
   - component: {fileID: 1383468965}
   - component: {fileID: 1383468967}
   - component: {fileID: 1383468966}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16544,7 +16545,7 @@ GameObject:
   - component: {fileID: 1410303166}
   - component: {fileID: 1410303168}
   - component: {fileID: 1410303167}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19369,7 +19370,7 @@ GameObject:
   - component: {fileID: 1749174407}
   - component: {fileID: 1749174409}
   - component: {fileID: 1749174408}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19403,7 +19404,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e4f5dd3063b8214ba9ce1eb17277819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: 'Se hanno un cappello nero sono inerti: non ti attirano ne ti respingono.'
+  message: 'quando gli interlocutori hanno un cappello nero sono inerti: non ti attirano
+    ne ti respingono.'
   ui: {fileID: 0}
 --- !u!65 &1749174409
 BoxCollider:
@@ -19524,7 +19526,7 @@ GameObject:
   - component: {fileID: 1781068690}
   - component: {fileID: 1781068692}
   - component: {fileID: 1781068691}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20667,7 +20669,7 @@ GameObject:
   - component: {fileID: 1878504223}
   - component: {fileID: 1878504225}
   - component: {fileID: 1878504224}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: trigger 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21427,7 +21429,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1933469889
 RectTransform:
   m_ObjectHideFlags: 0
